@@ -1,0 +1,30 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "创建 Python 虚拟环境",
+      "type": "shell",
+      "command": "py -3.11 -m venv .venv",
+      "problemMatcher": []
+    },
+    {
+      "label": "安装项目依赖",
+      "type": "shell",
+      "command": ".\\.venv\\Scripts\\python.exe -m pip install -r requirements.txt",
+      "problemMatcher": []
+    },
+    {
+      "label": "启动开发服务器",
+      "type": "shell",
+      "command": ".\\.venv\\Scripts\\python.exe -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000",
+      "isBackground": true,
+      "problemMatcher": {"pattern": [{"regexp": ".", "file": 1, "location": 2, "message": 3}], "background": {"activeOnStart": true, "beginsPattern": "Started reloader", "endsPattern": "Application startup complete"}}
+    },
+    {
+      "label": "运行测试",
+      "type": "shell",
+      "command": ".\\.venv\\Scripts\\python.exe -m pytest -q",
+      "problemMatcher": []
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#040519"><title>{{ app_title }} · 实时宇宙</title>
+  <link rel="stylesheet" href="./static/css/main.css"><link rel="stylesheet" href="./static/css/fixes.css"><style>.planet-label{position:fixed;z-index:2;color:#dbe5ff;font:10px system-ui;pointer-events:none;text-shadow:0 1px 5px #000}.planet-label[hidden]{display:none}</style>
+</head>
+<body>
+  <main id="app" aria-live="polite">
+    <canvas id="universe" aria-label="可交互三维粒子星系"></canvas>
+    <section id="landing" class="overlay landing">
+      <p class="eyebrow">REAL-TIME PARTICLE UNIVERSE</p><h1>粒子星系</h1>
+      <p>移动你的手指，触碰这片星海。</p><button id="enterButton" class="primary">进入星系 <span>↗</span></button>
+      <p class="hint">拖动探索 · 长按吸引 · 双击引爆星尘</p>
+    </section>
+    <section id="loader" class="overlay loader" aria-label="加载中"><i></i><strong>正在唤醒星海</strong><small id="loadStatus">准备 WebGL …</small><button id="retryButton" hidden>重新加载</button></section>
+    <section id="fallback" class="overlay fallback" hidden><div><p class="eyebrow">COMPATIBILITY</p><h2>无法启动 WebGL 星空</h2><p>请使用最新版 Chrome、Edge、Firefox 或 Safari，并确认硬件加速已开启。</p><button id="fallbackRetry">重新加载</button></div></section>
+    <header id="hud" hidden>
+      <div class="hud-left"><button id="backButton" class="icon-button" aria-label="返回首页">←</button><div><span id="sceneLabel">旋涡星系</span><small id="fpsLabel">-- FPS</small></div></div>
+      <div class="hud-right"><button id="earthButton" class="icon-button" aria-label="聚焦地球">◉</button><button id="panelButton" class="icon-button" aria-label="打开控制台">☷</button><button id="soundButton" class="icon-button" aria-label="声音开关">◌</button><button id="fullscreenButton" class="icon-button" aria-label="全屏">⛶</button></div>
+    </header>
+    <aside id="panel" class="glass" aria-label="星系控制面板" aria-hidden="true">
+      <div class="panel-title"><h2>星图控制</h2><button id="panelClose" class="icon-button" aria-label="关闭">×</button></div>
+      <label>场景<select id="sceneSelect"><option value="galaxy">旋涡星系</option><option value="gravity">粒子引力场</option><option value="solar">太阳系</option><option value="nebula">深空星云</option><option value="blackhole">黑洞</option></select></label>
+      <div class="quality-group"><span>画质</span><div id="qualityButtons"><button data-quality="auto" class="active">自动</button><button data-quality="low">低</button><button data-quality="medium">中</button><button data-quality="high">高</button></div></div>
+      <label>粒子数量 <output id="countOut"></output><input id="countControl" type="range" min="5000" max="100000" step="1000"></label>
+      <label>粒子大小 <output id="sizeOut"></output><input id="sizeControl" type="range" min="0.45" max="3" step="0.05"></label>
+      <label>速度 <output id="speedOut"></output><input id="speedControl" type="range" min="0" max="3" step="0.05"></label>
+      <label>引力 <output id="gravityOut"></output><input id="gravityControl" type="range" min="0" max="3" step="0.05"></label>
+      <label>影响范围 <output id="radiusOut"></output><input id="radiusControl" type="range" min="1" max="18" step="0.5"></label>
+      <label>颜色主题<select id="themeSelect"><option value="violet">蓝紫星河</option><option value="gold">金色宇宙</option><option value="ice">冰蓝深空</option><option value="red">红色星云</option><option value="mono">黑白银河</option></select></label>
+      <div class="toggles"><label><input id="repelToggle" type="checkbox"> 排斥模式</label><label><input id="driftToggle" type="checkbox"> 镜头漂移</label><label><input id="rotateToggle" type="checkbox" checked> 自动旋转</label><label><input id="orbitToggle" type="checkbox" checked> 显示轨道</label><label><input id="namesToggle" type="checkbox" checked> 行星名称</label></div>
+      <div class="panel-actions"><button id="resetScene">重置场景</button><button id="resetAll">恢复默认</button></div>
+      <p class="tiny">GPU 粒子 · 固定版 Three.js 0.161 · 设置仅保存在此设备</p>
+    </aside>
+    <section id="solarBar" class="glass" hidden><button id="solarPause" aria-label="暂停或继续">Ⅱ</button><button data-time="0.25">¼×</button><button data-time="1" class="active">1×</button><button data-time="4">4×</button><button data-time="20">20×</button><button id="focusEarth">地球</button><button id="dateMode">真实日期</button><button id="topView">俯视</button><button id="resetCamera">重置镜头</button><span id="simTime">模拟时间</span></section>
+    <article id="planetCard" class="glass" hidden><button id="closeCard" aria-label="关闭">×</button><h2></h2><dl></dl><p></p><small>数据为视觉模拟，采用简化椭圆轨道及真实倾角。</small></article>
+    <div id="toast" role="status"></div>
+    <div id="instructions" class="glass" hidden><strong>探索提示</strong><span>移动或滑动可扰动星尘；鼠标左键或单指长按可聚拢并形成局部涡旋，松开后自然散开；双击可触发超新星。</span><button id="dismissInstructions">知道了</button></div>
+  </main>
+  <script src="./static/js/core/vendor-loader.js?v=20260906-8"></script>
+  <script src="./static/js/core/app.js?v=20260906-8"></script>
+</body>
+</html>
